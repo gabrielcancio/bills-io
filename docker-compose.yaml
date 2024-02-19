@@ -10,3 +10,15 @@ services:
     ports:
       - 3335:3335
       - 9229:9229
+  postgres:
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=bills
+    volumes:
+      - polls_pg_data:/bitnami/postgresql
+volumes:
+  polls_pg_data:
