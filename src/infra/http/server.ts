@@ -1,11 +1,12 @@
 import fastify from "fastify";
 import {teste} from './routes/teste'
+import { environment } from '../env';
 const app = fastify();
 app.register(teste)
 app
   .listen({
-    host: '0.0.0.0',
-    port: 3335,
+    host: environment.HOST,
+    port: environment.PORT,
   })
   .then(() => {
     console.log("HTTP server running!");
