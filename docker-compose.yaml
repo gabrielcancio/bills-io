@@ -11,7 +11,7 @@ services:
       - 3335:3335
       - 9229:9229
   postgres:
-    image: bitnami/postgresql:latest
+    image: postgres:16.2-alpine
     ports:
       - '5432:5432'
     environment:
@@ -19,6 +19,6 @@ services:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=bills
     volumes:
-      - polls_pg_data:/bitnami/postgresql
+      - polls_pg_data:/var/lib/postgresql/data
 volumes:
   polls_pg_data:
