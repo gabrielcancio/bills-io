@@ -24,6 +24,6 @@ services:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=bills
     volumes:
-      - polls_pg_data:/var/lib/postgresql/data
+      - polls_pg_data:/var/lib/postgresql
 volumes:
   polls_pg_data:
