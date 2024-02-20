@@ -4,9 +4,26 @@ services:
   api:
     build: .
     container_name: bills-io-api
-    entrypoint: ["npm", "run", "dev"]
+    entrypoint: ./.docker/api/entrypoint.sh
     volumes:
       - .:/usr/app
     ports:
       - 3335:3335
       - 9229:9229
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.2-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=bills
+    volumes:
+      - polls_pg_data:/var/lib/postgresql
+volumes:
+  polls_pg_data:

@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "TabelaTeste" (
+    "id" SERIAL NOT NULL,
+    "nome" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "TabelaTeste_pkey" PRIMARY KEY ("id")
+);
