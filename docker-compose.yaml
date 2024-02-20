@@ -10,6 +10,11 @@ services:
     ports:
       - 3335:3335
       - 9229:9229
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:16.2-alpine
     ports:
