@@ -4,7 +4,7 @@ services:
   api:
     build: .
     container_name: bills-io-api
-    entrypoint: ["npm", "run", "dev"]
+    entrypoint: ./.docker/api/entrypoint.sh
     volumes:
       - .:/usr/app
     ports:
