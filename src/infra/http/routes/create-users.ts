@@ -1,22 +1,47 @@
-import { FastifyInstance } from "fastify";
-import { prisma } from '../../client/prisma'
-import {z} from 'zod'
+import { FastifyInstance } from 'fastify';
+import { prisma } from '../../client/prisma';
+import { z } from 'zod';
+
 export async function createUsers(app: FastifyInstance) {
   app.post('/user', async (request, reply) => {
-    const createUser = z.object({
-      name: z.string(),
-      cpf: z.number(),
-      email: z.string(),
-    });
-    const { name, cpf, email } = createUser.parse(request.body);
-    const user = await prisma.user.create({
-      data: {
-        name,
-        cpf,
-        email
-      }
-    })
+    try {
+      const createUserSchema = z.object({
+        name: z.string(),
+        cpf: z.string(),
+        email: z.string().email(),
+      });
 
-    return reply.status(201).send({ user: user });
-  })
+      const { name, cpf, email } = createUserSchema.parse(request.body);
+      const existingUser = await prisma.user.findUnique({
+        where: {
+          cpf
+        }
+      });
+
+      if (existingUser) {
+        return reply.status(400).send({
+          message: 'User already exists',
+          user:{
+            id: existingUser.id,
+            name: existingUser.name
+          }
+        });
+      }
+
+      const user = await prisma.user.create({
+        data: {
+          name,
+          cpf,
+          email,
+        },
+      });
+      return reply.status(201).send({ message: 'User created!', user: user });
+
+    } catch (error) {
+      return reply.status(500).send({
+        error: error
+      })
+    }
+
+  });
 }
