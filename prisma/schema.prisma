@@ -19,7 +19,7 @@ model TabelaTeste {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String     @id @default(uuid())
   name      String
   cpf       Int      @unique
   email     String   @unique
