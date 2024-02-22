@@ -21,10 +21,6 @@ export async function createUsers(app: FastifyInstance) {
       if (existingUser) {
         return reply.status(400).send({
           message: 'User already exists',
-          user:{
-            id: existingUser.id,
-            name: existingUser.name
-          }
         });
       }
 
@@ -38,7 +34,7 @@ export async function createUsers(app: FastifyInstance) {
       return reply.status(201).send({ message: 'User created!', user: user });
 
     } catch (error) {
-      return reply.status(500).send({
+      return reply.status(400).send({
         error: error
       })
     }

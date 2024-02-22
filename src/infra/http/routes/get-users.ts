@@ -19,7 +19,7 @@ export async function getUsers(app: FastifyInstance) {
 
     })
     if(user){
-      return reply.status(201).send({ user: user});
+      return reply.status(200).send({ user: user});
     }else{
       return reply.status(404).send({ message: 'User not found!'});
     }

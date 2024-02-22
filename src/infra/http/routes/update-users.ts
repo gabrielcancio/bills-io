@@ -9,11 +9,10 @@ export async function updateUsers(app: FastifyInstance) {
         userId: z.string().uuid(),
       });
       const updateDataUserSchema = z.object({
-        name: z.string(),
         email: z.string().email(),
       })
       const { userId } = updateUserSchema.parse(request.params);
-      const { name, email } = updateDataUserSchema.parse(request.body);
+      const { email } = updateDataUserSchema.parse(request.body);
 
       const existingUser = await prisma.user.findUnique({
         where: {
@@ -35,7 +34,6 @@ export async function updateUsers(app: FastifyInstance) {
           id: userId
         },
         data: {
-          name,
           email
         },
       });
@@ -43,13 +41,12 @@ export async function updateUsers(app: FastifyInstance) {
          message: 'User updated!', 
          user:  {
            id: user.id,
-           name,
            email
          }
         });
 
     } catch (error) {
-      return reply.status(500).send({
+      return reply.status(400).send({
         error: error
       })
     }

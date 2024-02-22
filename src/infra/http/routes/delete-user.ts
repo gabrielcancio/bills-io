@@ -14,7 +14,7 @@ export async function deleteUsers(app: FastifyInstance) {
         }
       })
 
-      return reply.status(201).send({
+      return reply.status(200).send({
         message:'User deleted!',
         deleted:{
           user:{
@@ -25,8 +25,7 @@ export async function deleteUsers(app: FastifyInstance) {
       });
 
     } catch (error) {
-      return reply.status(500).send({ message: error.meta.cause})
-
+      return reply.status(400).send({ message: error})
     }
   })
 }
