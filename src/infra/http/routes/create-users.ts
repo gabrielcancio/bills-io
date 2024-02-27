@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { prisma } from '../../client/prisma';
 import { z } from 'zod';
 
-export async function createUsers(app: FastifyInstance) {
+export async function createUser(app: FastifyInstance) {
   app.post('/user', async (request, reply) => {
     try {
       const createUserSchema = z.object({

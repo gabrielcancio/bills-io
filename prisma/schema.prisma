@@ -3,7 +3,7 @@
 
 generator client {
   provider      = "prisma-client-js"
-  //binaryTargets = "debian-openssl-3.0.x"
+  binaryTargets = ["debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -16,8 +16,8 @@ model User {
   name      String
   cpf       String   @unique
   email     String   @unique
-  createdat DateTime @default(now())
-  updatedat DateTime @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("uptaded_at")
 
   @@map("users")
 }

@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from '../../client/prisma'
 import { z } from 'zod'
-export async function deleteUsers(app: FastifyInstance) {
+export async function deleteUser(app: FastifyInstance) {
   app.delete('/user/:userId', async (request, reply) => {
     try {
       const deleteUserParams = z.object({

@@ -2,18 +2,19 @@ import { FastifyInstance } from 'fastify';
 import { prisma } from '../../client/prisma';
 import { z } from 'zod';
 
-export async function updateUsers(app: FastifyInstance) {
+export async function updateUser(app: FastifyInstance) {
   app.put('/user/:userId', async (request, reply) => {
     try {
       const updateUserSchema = z.object({
         userId: z.string().uuid(),
       });
-      const updateDataUserSchema = z.object({
-        email: z.string().email(),
-      })
+      const updateUserDataSchema = z.object({
+        name: z.string().optional(),
+        email: z.string().email().optional()
+        
+        })
       const { userId } = updateUserSchema.parse(request.params);
-      const { email } = updateDataUserSchema.parse(request.body);
-
+      const { name, email } = updateUserDataSchema.parse(request.body);
       const existingUser = await prisma.user.findUnique({
         where: {
           id: userId
@@ -25,25 +26,23 @@ export async function updateUsers(app: FastifyInstance) {
           message: 'User not found',
         });
       }
-
-      const user = await prisma.user.update({
-        select: {
-          id: true
-        },
+      const user= await prisma.user.update({
         where: {
-          id: userId
+          id: userId,
         },
         data: {
+          name,
           email
-        },
+         },
       });
-      return reply.status(201).send({
-         message: 'User updated!', 
-         user:  {
-           id: user.id,
-           email
-         }
-        });
+      
+      
+      return reply.status(200).send({
+        message: 'User  updated!',
+        user: {
+          id: user.id,
+        }
+      });
 
     } catch (error) {
       return reply.status(400).send({
