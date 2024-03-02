@@ -1,5 +1,5 @@
 import fastify, { FastifyError } from "fastify";
-import {createUser } from './routes/create-users'
+import { createUser } from './routes/create-user'
 import { environment } from '../env';
 import { getUser } from "./routes/get-user";
 import { updateUser } from "./routes/update-user";
