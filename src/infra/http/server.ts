@@ -4,25 +4,11 @@ import { environment } from '../env';
 import { getUser } from "./routes/get-user";
 import { updateUser } from "./routes/update-user";
 import { deleteUser } from "./routes/delete-user";
-import { ZodError } from "zod";
-import { HttpException } from "../../errors/http-exception";
+import { CustomErrorHandler } from "./custom-error-handler";
 const app = fastify();
+const errorHandler = new CustomErrorHandler();
 
-app.setErrorHandler((error: any, request, reply) => {
-  if(error instanceof HttpException) return reply.status(error.getStatus()).send(error.getHttpResponse());
-  if(error instanceof ZodError) return reply.status(400).send({
-    error: true,
-    message: 'Validation Error',
-    details: error.issues.map((issue) => {
-      return {
-        path: issue.path,
-        message: issue.message,
-      };
-    })
-  });
-
-  reply.status(500).send({ error: true, message: error.name, details: error.message })
-})
+app.setErrorHandler(errorHandler.getBindedHandle())
 
 app.register(createUser)
 app.register(getUser)
