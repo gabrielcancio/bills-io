@@ -17,15 +17,11 @@ export async function createUser(app: FastifyInstance) {
       }
     });
 
-    if (existingUser) {
-      throw new BadRequestException("User alredy exists", "The user you are trying to create with this CPF has already been registered previously");
-      // return reply.status(409).send({
-      //   "error": "Conflict (409)",
-      //   "message": "User alredy exists",
-      //   "details": "The user you are trying to create with this CPF has already been registered previously"
-
-      // });
-    }
+    if (existingUser)
+      throw new BadRequestException(
+        "User alredy exists",
+        "The user you are trying to create with this CPF has already been registered previously"
+      );
 
     const user = await prisma.user.create({
       data: {
