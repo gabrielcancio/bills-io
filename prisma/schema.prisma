@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -10,10 +11,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TabelaTeste {
-  id           Int      @id @default(autoincrement())
-  nome         String 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now())
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  cpf       String   @unique
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("uptaded_at")
 
+  @@map("users")
 }
