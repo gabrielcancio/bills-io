@@ -9,7 +9,6 @@ import { HttpException } from "../../errors/http-exception";
 const app = fastify();
 
 app.setErrorHandler((error: any, request, reply) => {
-  console.log(error);
   if(error instanceof HttpException) return reply.status(error.getStatus()).send(error.getHttpResponse());
   if(error instanceof ZodError) return reply.status(400).send({
     error: true,
