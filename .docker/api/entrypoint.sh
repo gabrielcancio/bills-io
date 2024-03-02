@@ -1,4 +1,4 @@
 #!/bin/sh
 npm ci && \
-npx prisma migrate dev && \
+npx prisma migrate deploy && \
 npm run dev
