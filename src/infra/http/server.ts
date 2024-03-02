@@ -20,7 +20,8 @@ app.setErrorHandler((error: any, request, reply) => {
       };
     })
   });
-  reply.status(500).send({ ok: false, message: error.message })
+
+  reply.status(500).send({ error: true, message: error.name, details: error.message })
 })
 
 app.register(createUser)
